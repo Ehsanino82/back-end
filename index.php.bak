@@ -23,13 +23,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 		}
 	}
 	$question=$_POST['question'];
-	if ((str_starts_with($question, 'آیا')) and ((str_ends_with($question, '?')) or (str_ends_with($question, '؟')))) {
+	if ((!(str_ends_with($question, '?'))) or (!(str_starts_with($question, 'آیا'))) or (!(str_ends_with($question, '؟')))) {
+		$msg = "سوال درستی پرسیده نشده";
+	}else{
 		$hash = hash('crc32', $question . " " . $en_name);
 		$hash = hexdec($hash);
 		$random_number = ($hash % 16);
 		$msg = $messages[$random_number];
-	}else{
-		$msg = "سوال درستی پرسیده نشده";
 	}
 }else{
 	$msg = "سوال خود را بپرس!";
